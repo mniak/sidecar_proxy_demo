@@ -14,12 +14,13 @@ curlie :80/call?param1=arg1
 ## Routing the traffic through the sidecar
 
 There are probably more ways, but I will teach two:
-(The code examples are relative to the deployment pod specification)
 
 ### Simple
 
 Dont expose the port of the main container.
 Only expose the port of your sidecar container.
+
+**excerpt of _deployment.yaml_**
 ```yaml
   containers:
   - name: echo
@@ -35,10 +36,21 @@ Only expose the port of your sidecar container.
     - containerPort: 8080 ## Do expose
 ```
 
+Then change the _service_ to point to the sidecar port.
+
+**excerpt of _service_.yaml_**
+```yaml
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080 ## Point to th sidecar port
+```
 
 ### Using a FORWARD iptables rule
 
-Add an init container
+Add an init container:
+
+**excerpt of _deployment.yaml_**
 ```yaml
   initContainers:
   - name: proxy-init ## New initcontainer with the iptables rule
