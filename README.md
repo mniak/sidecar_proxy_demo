@@ -38,7 +38,7 @@ Only expose the port of your sidecar container.
 
 Then change the _service_ to point to the sidecar port.
 
-**excerpt of _service_.yaml_**
+**excerpt of _service.yaml_**
 ```yaml
   ports:
     - protocol: TCP
@@ -47,6 +47,8 @@ Then change the _service_ to point to the sidecar port.
 ```
 
 ### Using a FORWARD iptables rule
+
+_Useful in some corner cases._
 
 Add an init container:
 
@@ -74,4 +76,4 @@ Add an init container:
     # - containerPort: 8080 ## Do NOT expose sidecar port
 ```
 
-And then you don't need to expose the port of the sidecar container
+And then you don't need to expose the port of the sidecar container.
