@@ -2,7 +2,11 @@ version: "3.9"
 services:
   echo:
     build: EchoService
+    ports:
+      - "5000:80"
   proxy:
     build: AuthProxy
     environment:
       - "Proxy__Upstream=http://echo:80"
+    ports:
+      - "5050:80"
