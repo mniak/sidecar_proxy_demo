@@ -13,8 +13,6 @@ curlie :80/call?param1=arg1
 
 ## Routing the traffic through the sidecar
 
-There are probably more ways, but I will teach two:
-
 ### Simple
 
 Don't expose the port of the main container.
