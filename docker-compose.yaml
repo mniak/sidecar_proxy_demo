@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  echo:
+    build: EchoService
+  proxy:
+    build: AuthProxy
+    environment:
+      - "Proxy__Upstream=http://echo:80"
