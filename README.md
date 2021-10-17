@@ -17,7 +17,7 @@ There are probably more ways, but I will teach two:
 
 ### Simple
 
-Dont expose the port of the main container.
+Don't expose the port of the main container.
 Only expose the port of your sidecar container.
 
 **excerpt of _deployment.yaml_**
