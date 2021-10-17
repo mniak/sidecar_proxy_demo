@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo
+  template:
+    metadata:
+      labels:
+        app: echo
+    spec:
+      initContainers:
+      - name: proxy-init
+        image: mniak/iptables
+        args: [ "-t", "nat", "-A", "PREROUTING", "-p", "tcp", "-i", "eth0", "--dport", "80", "-j", "REDIRECT", "--to-port", "8080" ]
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+      containers:
+      - name: echo
+        image: mniak/echo
+        ports:
+        - containerPort: 80
+      - name: proxy
+        image: mniak/sidecar_proxy_demo
+        env:
+        - name: Proxy__Upstream
+          value: "http://localhost:80"
+        ports:
+        - containerPort: 8080
